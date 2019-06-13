@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+    {% for post in posts %}
+  
+    <article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <img src="{{post.author.profile.dp.url}}">
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <strong>{{post.title}}</strong> <small>{{post.author}}</small> <small>{{post.date_posted}}</small>
+        <br>
+        {{post.content}}
+      </p>
+    </div>
+    <nav class="level is-mobile">
+      <div class="level-left">
+       
+        <a class="level-item">
+        <form method="POST" action="{% url 'like-post' %}">
+            {% csrf_token %}
+            <button class="button" type="submit" name="post_id" value="{{post.id}}"> <i id="heart-icon" class="fas fa-heart" style="color:#ef5350"></i>&nbsp;{{post.hearts.count}}</button>
+            {% comment %} <span class="icon is-small ml-3 "><i id="heart-icon" class="fas fa-heart" style="color:#ef5350"></i>&nbsp;<span id="heart-count" name="hcount">{{post.hearts}}</span> </span> {% endcomment %}
+        </form>
+        </a>
+      </div>
+    </nav>
+  </div>
+  <div class="media-right">
+  <form method="POST" action="{% url 'save-post' %}">
+            {% csrf_token %}
+            <button class="button" type="submit" name="post_id" value="{{post.id}}"> <i class="far fa-bookmark"></i></button>
+            {% comment %} <span class="icon is-small ml-3 "><i id="heart-icon" class="fas fa-heart" style="color:#ef5350"></i>&nbsp;<span id="heart-count" name="hcount">{{post.hearts}}</span> </span> {% endcomment %}
+        </form>
+    
+  </div>
+</article>
+    {% endfor %}
+ {% endblock content %}
+   
+
+   

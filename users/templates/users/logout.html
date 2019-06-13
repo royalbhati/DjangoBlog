@@ -1,0 +1,9 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="login-wrap">
+  <h2>You are out of hogwarts!</h2>
+  <h2>Please don't use any magic outside hogwarts!</h2>
+</div>
+<p> Want to Enter Again ? Go to Platform 9 3/4 <a href="{% url 'login' %}">Login</a></p>
+ {% endblock content %}
+   

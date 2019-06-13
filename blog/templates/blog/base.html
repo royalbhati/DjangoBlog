@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static "blog/main.css"%}" >
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    {% if title  %}
+        <title>{{title}}</title>
+        {% else %}
+        <title>default</title>
+    {% endif %} 
+</head>
+<body>
+<nav class="navbar" role="navigation" aria-label="main navigation" style="background:#00BCD4">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#">
+     <h1 style="color:white"><a href="{% url 'blog-home' %}">Hogwardsbook</a></h1>
+    </a>
+     <a class="navbar-item">
+     <h1 style="color:white"><a href="{% url 'profile' %}">Profile</h1>
+    </a>
+     <a class="navbar-item">
+     <h1 style="color:white"><a href="{% url 'blog-about' %}">About Us</h1>
+    </a>
+     
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+        {% if user.is_authenticated %}
+         <a class="button is-light" href="{% url 'logout'%}">
+              Log out
+            </a>
+
+        {% else %}
+            <a class="button is-primary" href="{% url 'register' %}">
+              <strong>Sign up</strong>
+            </a>
+            <a class="button is-light" href="{% url 'login'%}">
+              Log in
+            </a>
+        {% endif %}    
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="container">
+<div class="tabs is-centered">
+  <ul>
+    <li class="is-active"><a>Trending!</a></li>
+    <li><a>Latest</a></li>
+    <li><a>Your Posts</a></li>
+    <li>
+      <form method="POST" action="{% url 'like-post' %}">
+            {% csrf_token %}
+            <button class="button" type="submit" name="post_id" value="{{user.profile}}"> <i id="heart-icon" class="fas fa-heart" style="color:#ef5350"></i>&nbsp;{{post.hearts.count}}</button>
+            {% comment %} <span class="icon is-small ml-3 "><i id="heart-icon" class="fas fa-heart" style="color:#ef5350"></i>&nbsp;<span id="heart-count" name="hcount">{{post.hearts}}</span> </span> {% endcomment %}
+        </form>
+    <a href="{% url 'saved-posts' %}">Saved</a>
+    
+    </li>
+  </ul>
+</div>
+ <article class="media">
+
+ <div class="media-content">
+    <div class="content">
+    {% if messages%}
+    {% for message in messages %}
+      <div class="notification is-{{message.tags}}">
+      {{message}}
+      </div>
+    {% endfor %}
+    {% endif %}
+        {% block content  %}
+        {% endblock  %}
+    </div>
+ </div>
+ {% if user.is_authenticated%}
+ <div class="media-right">
+      <h1><strong>Recent Updates<strong></h1>
+      <hr>
+    <h6 class="subtitle" style="color:grey;font-size:1rem;">~ Harrypotter commented on voldemort's post..</h6>
+    <h6 class="subtitle" style="color:grey;font-size:1rem;">~ luna updated her profile</h6>
+    <h6 class="subtitle" style="color:grey;font-size:1rem;">~ Ron lost his wand...</h6>
+
+
+  </div>
+ {% endif %}  
+ 
+</article>
+
+</div>
+</div>
+<script src="{% static 'blog/app.js' %}"></script>
+
+</body>
+</html>
