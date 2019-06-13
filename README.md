@@ -1,6 +1,6 @@
-#BLOG APP in DJANGO
+# BLOG APP in DJANGO
 
-#SCREENSHOTS
+# SCREENSHOTS
 
 ![home](img1.png)
 
