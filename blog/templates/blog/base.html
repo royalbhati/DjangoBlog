@@ -62,10 +62,11 @@
     <li>
       <form method="POST" action="{% url 'like-post' %}">
             {% csrf_token %}
-            <button class="button" type="submit" name="post_id" value="{{user.profile}}"> <i id="heart-icon" class="fas fa-heart" style="color:#ef5350"></i>&nbsp;{{post.hearts.count}}</button>
+            {% comment %} <button class="button" type="submit" name="post_id" value="{{user.profile}}">    <a href="{% url 'saved-posts' %}">Saved</a>
+</button> {% endcomment %}
+Saved
             {% comment %} <span class="icon is-small ml-3 "><i id="heart-icon" class="fas fa-heart" style="color:#ef5350"></i>&nbsp;<span id="heart-count" name="hcount">{{post.hearts}}</span> </span> {% endcomment %}
         </form>
-    <a href="{% url 'saved-posts' %}">Saved</a>
     
     </li>
   </ul>
